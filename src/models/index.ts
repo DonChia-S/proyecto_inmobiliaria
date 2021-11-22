@@ -5,3 +5,4 @@ export * from './tipo-oferta.model';
 export * from './inmueble.model';
 export * from './solicitudes.model';
 export * from './estados.model';
+export * from './credenciales.model';
