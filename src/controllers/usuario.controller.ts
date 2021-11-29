@@ -1,4 +1,3 @@
-import {authenticate} from '@loopback/authentication';
 import {service} from '@loopback/core';
 import {
   Count,
@@ -38,13 +37,15 @@ export class UsuarioController {
     @requestBody() credenciales: Credenciales
   ) {
     let p = await this.servicioAutenticacion.IdentificarUsuario(credenciales.usuario, credenciales.clave);
+
     if (p) {
       let token = this.servicioAutenticacion.GenerarTokenJWT(p);
       return {
         datos: {
           nombre: p.nombre,
           correo: p.correo,
-          id: p.id
+          id: p.id,
+          rol: p.rolId
         },
         tk: token
       }
@@ -53,7 +54,6 @@ export class UsuarioController {
     }
   }
 
-  @authenticate("admin")
   @post('/usuarios')
   @response(200, {
     description: 'Usuario model instance',
